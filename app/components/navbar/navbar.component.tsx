@@ -7,6 +7,7 @@ import { getCookie } from "nextjs-cookie";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { loginUser } from "@/lib/feature/user.slice";
+import { UserMenuComponent } from "./user-menu.component";
 
 export const Navbar = () => {
   const userState = useAppSelector((state) => state.user);
@@ -36,14 +37,7 @@ export const Navbar = () => {
       </div>
       <div className="ml-auto">
         {userState.userData ? (
-          <button className="bg-orange-400 rounded-full p-1">
-            <Image
-              src="/user.svg"
-              height={100}
-              width={25}
-              alt="user-icon"
-            ></Image>
-          </button>
+          <UserMenuComponent></UserMenuComponent>
         ) : (
           <LoginCardComponent></LoginCardComponent>
         )}

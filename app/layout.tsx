@@ -4,7 +4,7 @@ import "./globals.css";
 import { Navbar } from "./components/navbar/navbar.component";
 import { Toaster } from "./components/ui/toaster";
 import StoreProvider from "./storeProvider";
-import { LoaderComponent } from "./components/loader/loader.component";
+import { LoaderComponent } from "./components/commons/loader.component";
 
 const inter = Inter({ subsets: ["latin"] });
 
