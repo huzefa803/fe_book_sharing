@@ -2,24 +2,30 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/app/components/ui/dialog";
 import { LoginComponent } from "../login/login.component";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { DialogPortal } from "@radix-ui/react-dialog";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { toggleDialog } from "@/lib/feature/login.slice";
 
 export const LoginCardComponent = () => {
-  const [open, setOpen] = useState(false);
-  useEffect(() => {
-    console.log("login card component");
-  }, []);
+  const dialogOpen = useAppSelector((state) => state.login.dialogOpen);
+  const dispatch = useAppDispatch();
+
+  const toggleLoginDialog = () => {
+    dispatch(toggleDialog());
+  };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen} defaultOpen={true}>
+    <Dialog
+      open={dialogOpen}
+      onOpenChange={toggleLoginDialog}
+      defaultOpen={true}
+    >
       <DialogTrigger className="button-primary">Log In</DialogTrigger>
       <DialogPortal>
         <DialogContent>

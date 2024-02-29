@@ -5,16 +5,19 @@ import Link from "next/link";
 import { LoginCardComponent } from "../login/login-card.component";
 import { getCookie } from "nextjs-cookie";
 import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { loginUser } from "@/lib/feature/user.slice";
 
 export const Navbar = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const userState = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setLoggedIn(getCookie("session-data") ? true : false);
-  }, []);
+    dispatch(loginUser(getCookie("session-data")?.valueOf()));
+  }, [dispatch]);
 
   return (
-    <header className="w-full flex items-center p-5 mb-12 bg-gray-200 shadow-md sticky top-0 z-50">
+    <header className="w-full flex items-center p-5 mb-12 bg-gray-200 shadow-md sticky top-0 z-40">
       <div>
         <Link href="/">
           <Image
@@ -32,7 +35,7 @@ export const Navbar = () => {
         <SearchComponent></SearchComponent>
       </div>
       <div className="ml-auto">
-        {loggedIn ? (
+        {userState.userData ? (
           <button className="bg-orange-400 rounded-full p-1">
             <Image
               src="/user.svg"

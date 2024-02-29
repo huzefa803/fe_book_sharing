@@ -1,15 +1,32 @@
 "use client";
-import axios from "axios";
+import axios, { Axios, AxiosResponse } from "axios";
 import Image from "next/image";
 import { useState } from "react";
 import { toast } from "../ui/use-toast";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/lib/hooks";
+import {
+  loginUser,
+  logoutUser,
+  setError,
+  setLoading,
+} from "@/lib/feature/user.slice";
+import { NextResponse } from "next/server";
+
+import { toggleDialog } from "@/lib/feature/login.slice";
+
+interface LoginResponseInterface {
+  username: string;
+  name: string;
+}
 
 export const LoginComponent = () => {
+  const dispatch = useAppDispatch();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const router = useRouter()
+  const router = useRouter();
 
   const login = (e: any) => {
     e.preventDefault();
@@ -19,9 +36,14 @@ export const LoginComponent = () => {
     };
     axios
       .post("api/auth", body)
-      .then((result) => {
-        console.log('logged in')
-        router.push('/')
+      .then((result: AxiosResponse<LoginResponseInterface>) => {
+        dispatch(
+          loginUser({
+            username: result.data.username,
+            name: result.data.name,
+          })
+        );
+        dispatch(toggleDialog())
       })
       .catch((err) => {
         console.log("login failed");

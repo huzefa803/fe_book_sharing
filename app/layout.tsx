@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "./components/navbar/navbar.component";
 import { Toaster } from "./components/ui/toaster";
 import StoreProvider from "./storeProvider";
+import { LoaderComponent } from "./components/loader/loader.component";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,14 +20,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
-        />
-      </head>
+      <head></head>
+
       <body className={inter.className}>
         <StoreProvider>
+          <LoaderComponent></LoaderComponent>
           <Navbar></Navbar>
           {children}
           <Toaster />
